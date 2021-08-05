@@ -1,0 +1,59 @@
+@using Microsoft.AspNetCore.Html
+@using QuoridorWeb.Controllers
+@model GameViewModel
+
+<div class="text-center">
+    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 0})'">↑</button>
+    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 1})'">↓</button>
+    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 2})'">→</button>
+    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 3})'">←</button>
+
+    <br>
+    <p>Current player index : @Model.game.currentPlayerIndex</p>
+    <p>First player position : @Model.game.players[0].position</p>
+    <p>Second player position : @Model.game.players[1].position</p>
+
+    @(new HtmlString(Model.table))
+    <br>
+
+    <table border="7px" bordercolor="#7d2b10">
+        <tr>
+            <td class="cell solid">1</td>
+            <td class="cell void">2</td>
+        </tr>
+        <tr>
+            <td class="cell solid"><span class="player">&#9823;</span></td>
+            <td class="cell solid">4</td>
+        </tr>
+    </table>
+
+    <style>
+        table{
+            border: solid 7px #7d2b10;
+        }
+
+        .void{
+            width: 7px;
+            height: 7px;
+            border-color: #7d2b10;
+            background: #7d2b10;
+        }
+
+        .solid{
+            width: 50px;
+            height: 50px;
+            background: #c43a0c;
+        }
+
+        .player{
+            width: 100%;
+            height: 100%;
+            color: red;
+        }
+    </style>
+
+    @if(!String.IsNullOrEmpty(Model.errorMessage))
+    {
+        <p>Error : @Model.errorMessage</p>
+    }
+</div>
