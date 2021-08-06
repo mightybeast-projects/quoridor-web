@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quoridor.Core.GameLogic;
@@ -12,6 +14,8 @@ namespace QuoridorWeb.Controllers
         private Game _game;
         private WebDrawer _webDrawer;
         private string _errorMessage;
+        private Vector2 _wallStartPosition;
+        private Vector2 _wallEndPosition;
         
         public GameController(ILogger<GameController> logger)
         {
@@ -24,22 +28,40 @@ namespace QuoridorWeb.Controllers
 
             _game = new Game();
             _game.AddNewPlayerPair();
-            _game.AddNewPlayerPair();
             _game.Start();
             _webDrawer = new WebDrawer(_game);
             return View(GetModel());
         }
 
-        public IActionResult Move(int id)
+        public IActionResult Move(int moveId)
         {
             _errorMessage = "";
 
-            Console.WriteLine("Movement : " + id);
-            try { _game.MakeCurrentPlayerMove((PlayerMove) id); }
+            try { _game.MakeCurrentPlayerMove((PlayerMove) moveId); }
             catch (Exception e) { _errorMessage = e.Message; }
             
-            Console.WriteLine("Current player : " + _game.currentPlayerIndex);
             return View("Start", GetModel());
+        }
+
+        public IActionResult PlaceWall(string modelJson)
+        {
+            _errorMessage = "";
+
+            DecerializeModelJson(modelJson);
+
+            try { _game.MakeCurrentPlayerPlaceWall(_wallStartPosition, _wallEndPosition); }
+            catch (Exception e) { _errorMessage = e.Message; }
+            
+            return View("Start", GetModel());
+        }
+
+        private void DecerializeModelJson(string modelJson)
+        {
+            var model = JsonSerializer.Deserialize<WallModel>(modelJson);
+            string[] wallStartPositionStr = model.wallStartPosition.Split(" ");
+            string[] wallEndPositionStr = model.wallEndPosition.Split(" ");
+            _wallStartPosition = new Vector2(Int32.Parse(wallStartPositionStr[0]), Int32.Parse(wallStartPositionStr[1]));
+            _wallEndPosition = new Vector2(Int32.Parse(wallEndPositionStr[0]), Int32.Parse(wallEndPositionStr[1]));
         }
 
         private GameViewModel GetModel()
@@ -51,12 +73,5 @@ namespace QuoridorWeb.Controllers
                 table = _webDrawer.GetBoard()
             };
         }
-    }
-
-    public class GameViewModel
-    {
-        public Game game {get; set; }
-        public string errorMessage {get; set; }
-        public string table {get; set; }
     }
 }

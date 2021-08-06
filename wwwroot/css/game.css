@@ -1,0 +1,31 @@
+.cell{
+    width: 50px;
+    height: 50px;
+    margin: auto;
+}
+
+table{
+    border: solid 8px #7d2b10;
+}
+
+.cell-void{
+    width: 7px;
+    height: 7px;
+    border-color: #7d2b10;
+    background: #7d2b10;
+}
+
+.cell-solid{
+    width: 50px;
+    height: 50px;
+    background: #c43a0c;
+}
+
+.wall{
+    background: black;
+}
+
+.player{
+    width: 100%;
+    height: 100%;
+}

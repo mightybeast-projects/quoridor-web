@@ -4,7 +4,7 @@ namespace QuoridorWeb.WebApp.Drawable
     {
         public string GetDrawString()
         {
-            return "<td class='cell void'></td>";
+            return "<td class='cell-void'></td>";
         }
     }
 }

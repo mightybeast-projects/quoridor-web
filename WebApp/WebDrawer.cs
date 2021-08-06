@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using Quoridor.Core;
 using Quoridor.Core.GameLogic;
@@ -67,10 +68,23 @@ namespace QuoridorWeb.WebApp
                 }
             }
 
-            if (TileIndexesAreDividableByTwo(i, j))
+            if (UnitIsWall(i, j))
+                _drawable = new WallDrawable();
+            else if (TileIndexesAreDividableByTwo(i, j))
                 _drawable = new SolidTileDrawable();
             else
                 _drawable = new VoidTileDrawable();
+        }
+
+        private bool UnitIsWall(int i, int j)
+        {
+            Vector2 currentPosition = new Vector2(i, j);
+            foreach (Player player in _players)
+                foreach (Wall wall in _board.placedWalls)
+                    if (CurrentPositionIsWall(currentPosition, wall) && !_board.grid[i, j].isEmpty) 
+                        return true;
+
+            return false;
         }
 
         private bool TileIndexesAreDividableByTwo(int i, int j)
@@ -81,6 +95,13 @@ namespace QuoridorWeb.WebApp
         private bool UnitIsPlayer(int i, int j)
         {
             return _currentPlayer.position.X == i && _currentPlayer.position.Y == j;
+        }
+
+        private static bool CurrentPositionIsWall(Vector2 currentPosition, Wall wall)
+        {
+            return wall.startPosition == currentPosition || 
+                    wall.middlePosition == currentPosition || 
+                    wall.endPosition == currentPosition;
         }
     }
 }

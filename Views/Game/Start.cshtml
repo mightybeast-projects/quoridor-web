@@ -1,60 +1,63 @@
 @using Microsoft.AspNetCore.Html
-@using QuoridorWeb.Controllers
 @using QuoridorWeb.WebApp.Drawable
+@using QuoridorWeb.WebApp;
 @model GameViewModel
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+@section Scripts{
+    <script src="~/js/game.js"></script>
+}
 
 <div class="text-center">
-    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 0})'">↑</button>
-    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 1})'">↓</button>
-    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 2})'">→</button>
-    <button onclick="location.href='@Url.Action("Move", "Game", new {id = 3})'">←</button>
+    <button onclick="Move(0)">↑</button>
+    <button onclick="Move(1)">↓</button>
+    <button onclick="Move(2)">→</button>
+    <button onclick="Move(3)">←</button>
+    <button onclick="PlaceWall('0 1', '2 1')">Place wall</button>
 
     <br>
     <p>Turn to move : 
-    @(new HtmlString(new PlayerDrawable(Model.game.currentPlayerIndex).GetDrawString()))
+        <div class="cell">
+            @(new HtmlString(new PlayerDrawable(Model.game.players.IndexOf(Model.game.currentPlayer)).GetDrawString()))
+        </div>
     </p>
 
     <br>
     @(new HtmlString(Model.table))
     <br>
 
-    <table border="7px" bordercolor="#7d2b10">
+    <table>
         <tr>
-            <td class="cell solid">1</td>
-            <td class="cell void">2</td>
+            <td class="cell-solid"><img class="player" src='/img/Red_pawn.svg'> </td>
+            <td class="cell-void"> </td>
+            <td class="cell-solid"> </td>
         </tr>
         <tr>
-            <td class="cell solid"><img src="/img/Red_pawn.svg"></td>
-            <td class="cell solid">4</td>
+            <td class="cell-void wall"> </td>
+            <td class="cell-void wall"> </td>
+            <td class="cell-void wall"> </td>
+        </tr>
+        <tr>
+            <td class="cell-solid"> </td>
+            <td class="cell-void"> </td>
+            <td class="cell-solid"><img class="player" src='/img/Green_pawn.svg'> </td>
         </tr>
     </table>
 
-    <style>
-        table{
-            border: solid 7px #7d2b10;
+    <script>
+        function Move(moveId) {
+            window.location.href = '@Url.Action("Move", "Game")?moveId=' + moveId;
         }
 
-        .void{
-            width: 7px;
-            height: 7px;
-            border-color: #7d2b10;
-            background: #7d2b10;
+        function PlaceWall(start, end) {
+            var model = {
+                wallStartPosition: start, 
+                wallEndPosition: end
+            }
+            var modelJson = JSON.stringify(model);
+            window.location.href = '@Url.Action("PlaceWall", "Game")?modelJson=' + modelJson;
         }
-
-        .solid{
-            width: 50px;
-            height: 50px;
-            background: #c43a0c;
-        }
-
-        .player{
-            width: 100%;
-            height: 100%;
-            color: red;
-        }
-    </style>
+    </script>
 
     @if(!String.IsNullOrEmpty(Model.errorMessage))
     {

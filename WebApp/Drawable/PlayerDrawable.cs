@@ -27,7 +27,7 @@ namespace QuoridorWeb.WebApp.Drawable
 
         public string GetDrawString()
         {
-            return "<td class='cell solid'><img src='/img/" + _imgName +".svg'></td>";
+            return "<td class='cell-solid'><img class='player' src='/img/" + _imgName +".svg'></td>";
         }
     }
 }

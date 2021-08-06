@@ -1,10 +1,10 @@
 namespace QuoridorWeb.WebApp.Drawable
 {
-    public class SolidTileDrawable : IDrawable
+    public class WallDrawable : IDrawable
     {
         public string GetDrawString()
         {
-            return "<td class='cell-solid'></td>";
+            return "<td class='cell-void wall'></td>";
         }
     }
 }
