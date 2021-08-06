@@ -1,6 +1,9 @@
 @using Microsoft.AspNetCore.Html
 @using QuoridorWeb.Controllers
+@using QuoridorWeb.WebApp.Drawable
 @model GameViewModel
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <div class="text-center">
     <button onclick="location.href='@Url.Action("Move", "Game", new {id = 0})'">↑</button>
@@ -9,10 +12,11 @@
     <button onclick="location.href='@Url.Action("Move", "Game", new {id = 3})'">←</button>
 
     <br>
-    <p>Current player index : @Model.game.currentPlayerIndex</p>
-    <p>First player position : @Model.game.players[0].position</p>
-    <p>Second player position : @Model.game.players[1].position</p>
+    <p>Turn to move : 
+    @(new HtmlString(new PlayerDrawable(Model.game.currentPlayerIndex).GetDrawString()))
+    </p>
 
+    <br>
     @(new HtmlString(Model.table))
     <br>
 
@@ -22,7 +26,7 @@
             <td class="cell void">2</td>
         </tr>
         <tr>
-            <td class="cell solid"><span class="player">&#9823;</span></td>
+            <td class="cell solid"><img src="/img/Red_pawn.svg"></td>
             <td class="cell solid">4</td>
         </tr>
     </table>
@@ -54,6 +58,10 @@
 
     @if(!String.IsNullOrEmpty(Model.errorMessage))
     {
-        <p>Error : @Model.errorMessage</p>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                alert("@Model.errorMessage");
+            });
+        </script>
     }
 </div>

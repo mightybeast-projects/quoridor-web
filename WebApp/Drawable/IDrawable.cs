@@ -1,4 +1,4 @@
-namespace QuoridorWebMVC.WebApp.Drawable
+namespace QuoridorWeb.WebApp.Drawable
 {
     public interface IDrawable
     {

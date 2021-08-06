@@ -1,18 +1,24 @@
+using System.Collections.Generic;
 using System.Text;
 using Quoridor.Core;
-using QuoridorWebMVC.WebApp.Drawable;
+using Quoridor.Core.GameLogic;
+using Quoridor.Core.PlayerLogic;
+using QuoridorWeb.WebApp.Drawable;
 
 namespace QuoridorWeb.WebApp
 {
     public class WebDrawer
     {
         private Board _board;
+        private List<Player> _players;
+        private Player _currentPlayer;
         private StringBuilder _table;
         private IDrawable _drawable;
 
-        public WebDrawer(Board board)
+        public WebDrawer(Game game)
         {
-            _board = board;
+            _board = game.board;
+            _players = game.players;
         }
 
         public string GetBoard()
@@ -50,6 +56,17 @@ namespace QuoridorWeb.WebApp
 
         private void ChooseDrawable(int i, int j)
         {
+            for (int k = 0; k < _players.Count; k++)
+            {
+                Player player = _players[k];
+                _currentPlayer = player;
+                if (UnitIsPlayer(i, j))
+                {
+                    _drawable = new PlayerDrawable(k);
+                    return;
+                }
+            }
+
             if (TileIndexesAreDividableByTwo(i, j))
                 _drawable = new SolidTileDrawable();
             else
@@ -59,6 +76,11 @@ namespace QuoridorWeb.WebApp
         private bool TileIndexesAreDividableByTwo(int i, int j)
         {
             return i % 2 == 0 && j % 2 == 0;
+        }
+
+        private bool UnitIsPlayer(int i, int j)
+        {
+            return _currentPlayer.position.X == i && _currentPlayer.position.Y == j;
         }
     }
 }
