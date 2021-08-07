@@ -33,7 +33,7 @@ namespace QuoridorWeb.WebApp
 
         private void DrawTiles()
         {
-            _table.Append("<table>");
+            _table.Append("<table id='board'>");
 
             for (int i = _board.grid.GetLength(0) - 1; i >= 0; i--)
             {
@@ -71,9 +71,9 @@ namespace QuoridorWeb.WebApp
             if (UnitIsWall(i, j))
                 _drawable = new WallDrawable();
             else if (TileIndexesAreDividableByTwo(i, j))
-                _drawable = new SolidTileDrawable();
+                _drawable = new SolidTileDrawable(i, j);
             else
-                _drawable = new VoidTileDrawable();
+                _drawable = new VoidTileDrawable(i, j);
         }
 
         private bool UnitIsWall(int i, int j)

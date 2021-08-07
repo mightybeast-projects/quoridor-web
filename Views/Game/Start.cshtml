@@ -15,14 +15,12 @@
     <button onclick="Move(3)">←</button>
     <button onclick="PlaceWall('0 1', '2 1')">Place wall</button>
 
-    <br>
     <p>Turn to move : 
         <div class="cell">
             @(new HtmlString(new PlayerDrawable(Model.game.players.IndexOf(Model.game.currentPlayer)).GetDrawString()))
         </div>
     </p>
 
-    <br>
     @(new HtmlString(Model.table))
     <br>
 
@@ -45,6 +43,8 @@
     </table>
 
     <script>
+        var wallStartPosition;
+
         function Move(moveId) {
             window.location.href = '@Url.Action("Move", "Game")?moveId=' + moveId;
         }
@@ -57,6 +57,17 @@
             var modelJson = JSON.stringify(model);
             window.location.href = '@Url.Action("PlaceWall", "Game")?modelJson=' + modelJson;
         }
+
+        function DisplayPosition(positionStr)
+        {
+            if(wallStartPosition == undefined)
+                wallStartPosition = positionStr;
+            else if(wallStartPosition != undefined)
+            {
+                alert(wallStartPosition + " " + positionStr)
+                PlaceWall(wallStartPosition, positionStr);
+            }
+        }
     </script>
 
     @if(!String.IsNullOrEmpty(Model.errorMessage))
@@ -64,6 +75,7 @@
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
                 alert("@Model.errorMessage");
+                wallStartPosition = undefined;
             });
         </script>
     }

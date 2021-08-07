@@ -48,6 +48,7 @@ namespace QuoridorWeb.Controllers
             _errorMessage = "";
 
             DecerializeModelJson(modelJson);
+            Console.WriteLine(_wallStartPosition + " " + _wallEndPosition);
 
             try { _game.MakeCurrentPlayerPlaceWall(_wallStartPosition, _wallEndPosition); }
             catch (Exception e) { _errorMessage = e.Message; }
