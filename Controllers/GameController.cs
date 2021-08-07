@@ -1,10 +1,12 @@
+using System.Net;
 using System;
 using System.Numerics;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quoridor.Core.GameLogic;
 using QuoridorWeb.WebApp;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace QuoridorWeb.Controllers
 {
@@ -58,7 +60,7 @@ namespace QuoridorWeb.Controllers
 
         private void DecerializeModelJson(string modelJson)
         {
-            var model = JsonSerializer.Deserialize<WallModel>(modelJson);
+            var model = JsonConvert.DeserializeObject<WallModel>(modelJson);
             string[] wallStartPositionStr = model.wallStartPosition.Split(" ");
             string[] wallEndPositionStr = model.wallEndPosition.Split(" ");
             _wallStartPosition = new Vector2(Int32.Parse(wallStartPositionStr[0]), Int32.Parse(wallStartPositionStr[1]));
