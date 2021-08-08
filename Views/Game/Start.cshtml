@@ -3,76 +3,56 @@
 @using QuoridorWeb.WebApp;
 @model GameViewModel
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/request-handler.js"></script>
-<script src="~/js/wall-placement-handler.js"></script>
-<script src="~/js/ui.js"></script>
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/wall-placement-handler.js"></script>
+    <script src="~/js/request-handler.js"></script>
+    <script src="~/js/ui.js"></script>
+}
 
 <div id="content-div">
-<div class="text-center">
-    <button onclick="move(0)">↑</button>
-    <button onclick="move(1)">↓</button>
-    <button onclick="move(2)">→</button>
-    <button onclick="move(3)">←</button>
-    <button onclick="placeWall('0 1', '2 1')">Place wall</button>
-    <button onclick="tmp()">Tmp</button>
+    <div class="text-center">
+        <button onclick="sendMoveRequest(0)">↑</button>
+        <button onclick="sendMoveRequest(1)">↓</button>
+        <button onclick="sendMoveRequest(2)">→</button>
+        <button onclick="sendMoveRequest(3)">←</button>
+        <button onclick="sendPlaceWallRequest('0 1', '2 1')">Place wall</button>
 
-    <p>Turn to move : 
-        <div class="cell">
-            @(new HtmlString(new PlayerDrawable(Model.game.players.IndexOf(Model.game.currentPlayer)).GetDrawString()))
-        </div>
-    </p>
+        <p>Turn to move : 
+            <div class="cell">
+                @(new HtmlString(new PlayerDrawable(Model.game.players.IndexOf(Model.game.currentPlayer)).GetDrawString()))
+            </div>
+        </p>
 
-    @(new HtmlString(Model.table))
-    <br>
+        @(new HtmlString(Model.table))
+        <br>
 
-    
-
-    
-    <table>
-        <tr>
-            <td class="cell-solid"><img class="player" src='/img/Red_pawn.svg'> </td>
-            <td class="cell-void" onclick="blink(this)"> </td>
-            <td class="cell-solid"> </td>
-        </tr>
-        <tr>
-            <td class="cell-void wall"> </td>
-            <td class="cell-void wall"> </td>
-            <td class="cell-void wall"> </td>
-        </tr>
-        <tr>
-            <td class="cell-solid"> </td>
-            <td class="cell-void"> </td>
-            <td class="cell-solid"><img class="player" src='/img/Green_pawn.svg'> </td>
-        </tr>
-    </table>
+        <table>
+            <tr>
+                <td class="cell-solid"><img class="player" src='/img/Red_pawn.svg'> </td>
+                <td class="cell-void" onclick="blink(this)"> </td>
+                <td class="cell-solid"> </td>
+            </tr>
+            <tr>
+                <td class="cell-void wall"> </td>
+                <td class="cell-void wall"> </td>
+                <td class="cell-void wall"> </td>
+            </tr>
+            <tr>
+                <td class="cell-solid"> </td>
+                <td class="cell-void"> </td>
+                <td class="cell-solid"><img class="player" src='/img/Green_pawn.svg'> </td>
+            </tr>
+        </table>
     </div>
-
-    <script>
-        function tmp()
-        {
-            $.ajax({
-                type: "POST",
-                url: "/Game/PostTmp",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json' 
-                },
-                data: 1,
-                success: function (data) {
-                    $("#content-div").empty().html(data);
-                }
-            });
-        }
-    </script>
-
-    @if(!String.IsNullOrEmpty(Model.errorMessage))
-    {
-        <script type="text/javascript" charset="utf-8">
-            $(document).ready(function() {
-                alert("@Model.errorMessage");
-                wallStartPosition = undefined;
-            });
-        </script>
-    }
 </div>
+
+@if(!String.IsNullOrEmpty(Model.errorMessage))
+{
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            alert("@Model.errorMessage");
+            wallStartPosition = undefined;
+        });
+    </script>
+}

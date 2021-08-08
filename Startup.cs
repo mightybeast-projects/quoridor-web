@@ -26,13 +26,10 @@ namespace QuoridorWeb
             services.AddControllersWithViews();
             services.AddSingleton<GameController>();
             services.AddMvc().AddControllersAsServices();
-            services.AddDistributedMemoryCache();
-            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSession();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

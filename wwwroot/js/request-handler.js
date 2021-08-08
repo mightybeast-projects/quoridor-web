@@ -1,12 +1,29 @@
-function move(moveId) {
-    window.location.href = '/Game/Move?moveId=' + moveId;
+function sendMoveRequest(moveId) {
+    sendAjaxRequest("/Game/PostMove", moveId);
 }
 
-function placeWall(start, end) {
-    var model = {
+function sendPlaceWallRequest(start, end) {
+    var wallModel = {
         wallStartPosition: start, 
         wallEndPosition: end
     }
-    var modelJson = JSON.stringify(model);
-    window.location.href = '/Game/PlaceWall?modelJson=' + modelJson;
+
+    sendAjaxRequest("/Game/PostPlaceWall", wallModel);
+    wallStartPosition = undefined;
+}
+
+function sendAjaxRequest(url, model)
+{
+    $.ajax({
+        type: "POST",
+        url: url,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+        data: JSON.stringify(model),
+        success: function (data) {
+            $("#content-div").empty().html(data);
+        }
+    });
 }

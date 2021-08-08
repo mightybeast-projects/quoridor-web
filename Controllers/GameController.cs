@@ -36,41 +36,32 @@ namespace QuoridorWeb.Controllers
             return View(GetModel());
         }
 
-        public IActionResult Move(int moveId)
+        [HttpPost]
+        public IActionResult PostMove([FromBody] int moveId)
         {
             _errorMessage = "";
 
             try { _game.MakeCurrentPlayerMove((PlayerMove) moveId); }
             catch (Exception e) { _errorMessage = e.Message; }
-            
-            return View("Start", GetModel());
+             
+            return PartialView("Start", GetModel());
         }
 
-        public IActionResult PlaceWall(string modelJson)
+        [HttpPost]
+        public IActionResult PostPlaceWall([FromBody] WallModel model)
         {
             _errorMessage = "";
 
-            DecerializeModelJson(modelJson);
+            DecerializeModelJson(model);
 
             try { _game.MakeCurrentPlayerPlaceWall(_wallStartPosition, _wallEndPosition); }
             catch (Exception e) { _errorMessage = e.Message; }
             
-            return View("Start", GetModel());
-        }
-
-        [HttpPost]
-        public PartialViewResult PostTmp([FromBody] int key)
-        {
-            _key++;
-            Console.WriteLine(_key);
-            try { _game.MakeCurrentPlayerMove(PlayerMove.MOVE_UP); }
-            catch (Exception e) { _errorMessage = e.Message; }
             return PartialView("Start", GetModel());
         }
 
-        private void DecerializeModelJson(string modelJson)
+        private void DecerializeModelJson(WallModel model)
         {
-            var model = JsonConvert.DeserializeObject<WallModel>(modelJson);
             string[] wallStartPositionStr = model.wallStartPosition.Split(" ");
             string[] wallEndPositionStr = model.wallEndPosition.Split(" ");
             _wallStartPosition = new Vector2(Int32.Parse(wallStartPositionStr[0]), Int32.Parse(wallStartPositionStr[1]));
