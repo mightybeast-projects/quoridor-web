@@ -18,6 +18,7 @@ namespace QuoridorWeb.Controllers
         private string _errorMessage;
         private Vector2 _wallStartPosition;
         private Vector2 _wallEndPosition;
+        private int _key;
         
         public GameController(ILogger<GameController> logger)
         {
@@ -50,12 +51,21 @@ namespace QuoridorWeb.Controllers
             _errorMessage = "";
 
             DecerializeModelJson(modelJson);
-            Console.WriteLine(_wallStartPosition + " " + _wallEndPosition);
 
             try { _game.MakeCurrentPlayerPlaceWall(_wallStartPosition, _wallEndPosition); }
             catch (Exception e) { _errorMessage = e.Message; }
             
             return View("Start", GetModel());
+        }
+
+        [HttpPost]
+        public PartialViewResult PostTmp([FromBody] int key)
+        {
+            _key++;
+            Console.WriteLine(_key);
+            try { _game.MakeCurrentPlayerMove(PlayerMove.MOVE_UP); }
+            catch (Exception e) { _errorMessage = e.Message; }
+            return PartialView("Start", GetModel());
         }
 
         private void DecerializeModelJson(string modelJson)

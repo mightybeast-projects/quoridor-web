@@ -7,7 +7,7 @@ namespace QuoridorWeb.WebApp.Drawable
 
         public string GetDrawString()
         {
-            return "<td position='" + _pos + "' class='cell-void' onclick='DisplayPosition(this.getAttribute(`position`))'></td>";
+            return "<td position='" + _pos + "' class='cell-void' onclick='assignPosition(this.getAttribute(`position`)); blink(this)'></td>";
         }
     }
 }

@@ -4,16 +4,18 @@
 @model GameViewModel
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-@section Scripts{
-    <script src="~/js/game.js"></script>
-}
+<script src="~/js/request-handler.js"></script>
+<script src="~/js/wall-placement-handler.js"></script>
+<script src="~/js/ui.js"></script>
 
+<div id="content-div">
 <div class="text-center">
-    <button onclick="Move(0)">↑</button>
-    <button onclick="Move(1)">↓</button>
-    <button onclick="Move(2)">→</button>
-    <button onclick="Move(3)">←</button>
-    <button onclick="PlaceWall('0 1', '2 1')">Place wall</button>
+    <button onclick="move(0)">↑</button>
+    <button onclick="move(1)">↓</button>
+    <button onclick="move(2)">→</button>
+    <button onclick="move(3)">←</button>
+    <button onclick="placeWall('0 1', '2 1')">Place wall</button>
+    <button onclick="tmp()">Tmp</button>
 
     <p>Turn to move : 
         <div class="cell">
@@ -24,10 +26,13 @@
     @(new HtmlString(Model.table))
     <br>
 
+    
+
+    
     <table>
         <tr>
             <td class="cell-solid"><img class="player" src='/img/Red_pawn.svg'> </td>
-            <td class="cell-void"> </td>
+            <td class="cell-void" onclick="blink(this)"> </td>
             <td class="cell-solid"> </td>
         </tr>
         <tr>
@@ -41,29 +46,23 @@
             <td class="cell-solid"><img class="player" src='/img/Green_pawn.svg'> </td>
         </tr>
     </table>
+    </div>
 
     <script>
-        var wallStartPosition;
-
-        function Move(moveId) {
-            window.location.href = '@Url.Action("Move", "Game")?moveId=' + moveId;
-        }
-
-        function PlaceWall(start, end) {
-            var model = {
-                wallStartPosition: start, 
-                wallEndPosition: end
-            }
-            var modelJson = JSON.stringify(model);
-            window.location.href = '@Url.Action("PlaceWall", "Game")?modelJson=' + modelJson;
-        }
-
-        function DisplayPosition(positionStr)
+        function tmp()
         {
-            if(wallStartPosition == undefined)
-                wallStartPosition = positionStr;
-            else if(wallStartPosition != undefined)
-                PlaceWall(wallStartPosition, positionStr);
+            $.ajax({
+                type: "POST",
+                url: "/Game/PostTmp",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json' 
+                },
+                data: 1,
+                success: function (data) {
+                    $("#content-div").empty().html(data);
+                }
+            });
         }
     </script>
 
