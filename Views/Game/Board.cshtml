@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Html
 
 <div id="content-div">
-    @(new HtmlString(Model.table))
+    @(new HtmlString(Model.board))
 </div>
 
 <script>
@@ -12,15 +12,19 @@
     function handleResponceAndReloadUi()
     {
         select($(getCurrentPlayer()).parent());
-        if(receivedErrorMessage())
+        if(getReceivedErrorMessage())
             alert("@Model.errorMessage");
     }
 
     function getCurrentPlayer() {
-        return '#player-@Model.game.players.IndexOf(Model.game.currentPlayer)';
+        return '#player-@Model.currentPlayerIndex';
     }
 
-    function receivedErrorMessage() {
+    function getReceivedErrorMessage() {
         return '@String.IsNullOrEmpty(Model.errorMessage)' == "False";
+    }
+
+    function checkCurrentPlayerIndex(playerIndex) {
+        return playerIndex == '@Model.currentPlayerIndex';
     }
 </script>

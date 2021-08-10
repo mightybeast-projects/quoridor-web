@@ -9,7 +9,6 @@ function sendPlaceWallRequest(start, end) {
     }
 
     sendAjaxRequest("/Game/PostPlaceWall", wallModel);
-    wallStartPosition = undefined;
 }
 
 function sendAjaxRequest(url, model)

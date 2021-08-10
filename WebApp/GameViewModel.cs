@@ -4,9 +4,8 @@ namespace QuoridorWeb.WebApp
 {
     public class GameViewModel
     {
-        public Game game {get; set; }
+        public string board {get; set; }
         public string errorMessage {get; set; }
-        public string table {get; set; }
-        public int number {get; set;}
+        public int currentPlayerIndex {get; set;}
     }
 }

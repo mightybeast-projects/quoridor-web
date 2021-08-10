@@ -1,12 +1,9 @@
-using System.Net;
 using System;
 using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quoridor.Core.GameLogic;
 using QuoridorWeb.WebApp;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 namespace QuoridorWeb.Controllers
 {
@@ -72,9 +69,9 @@ namespace QuoridorWeb.Controllers
         {
             return new GameViewModel()
             {
-                game = _game, 
+                board = _webDrawer.GetBoard(),
                 errorMessage = _errorMessage,
-                table = _webDrawer.GetBoard()
+                currentPlayerIndex = _game.players.IndexOf(_game.currentPlayer)
             };
         }
     }

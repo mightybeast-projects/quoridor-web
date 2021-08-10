@@ -12,7 +12,7 @@ function movePlayer(tilePosition)
 {
     if(playerSelected) {
         positionToMoveStr = tilePosition;
-        
+
         calculateMoveVector();
         sendAppropriateMoveRequest();
         

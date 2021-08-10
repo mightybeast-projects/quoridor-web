@@ -7,13 +7,8 @@ namespace QuoridorWeb.WebApp.Drawable
     {
         private int _playerIndex;
         private string _imgName;
-        private List<string> _imgNames = new List<string>() 
-        {
-            "Red_pawn",
-            "Blue_pawn",
-            "Yellow_pawn",
-            "Green_pawn"
-        };
+        private List<string> _imgNames = new List<string>()
+            { "Red_pawn", "Blue_pawn", "Yellow_pawn", "Green_pawn"};
 
         public PlayerDrawable(int i, int j, int playerIndex) : base(i, j)
         {
@@ -25,7 +20,8 @@ namespace QuoridorWeb.WebApp.Drawable
         {
             StringBuilder str = new StringBuilder();
             str.Append("<td ");
-            str.Append(GetTileAttributesStr());
+            str.Append("position='" + _pos + "'");
+            str.Append("class='cell-solid'");
             str.Append(">");
             str.Append(GetPlayerImageTag());
             str.Append("</td>");
@@ -33,29 +29,28 @@ namespace QuoridorWeb.WebApp.Drawable
             return str.ToString();
         }
 
-        private string GetTileAttributesStr()
-        {
-            return "position='" + _pos + "' class='cell-solid'";
-        }
-
         private string GetPlayerImageTag()
         {
             StringBuilder str = new StringBuilder();
             str.Append("<img ");
-            str.Append("id='player-" + _playerIndex + "' class='player' src='/img/" + _imgName + ".svg' ");
-            str.Append(GetOnClickFunctionStr());
+            str.Append("id='player-" + _playerIndex + "'");
+            str.Append("class='player'");
+            str.Append("src='/img/" + _imgName + ".svg'");
+            str.Append(GetOnClickFunctionsStr());
             str.Append(">");
 
             return str.ToString();
         }
 
-        private string GetOnClickFunctionStr()
+        private string GetOnClickFunctionsStr()
         {
             StringBuilder str = new StringBuilder();
             str.Append("onclick='");
+            str.Append("if(checkCurrentPlayerIndex(" + _playerIndex + "))");
+            str.Append("{");
             str.Append("selectPlayer($(this).parent().attr(`position`));");
             str.Append("blink(this)");
-            str.Append("'");
+            str.Append("}'");
 
             return str.ToString();
         }
