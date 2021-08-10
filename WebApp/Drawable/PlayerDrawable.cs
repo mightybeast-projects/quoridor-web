@@ -1,33 +1,62 @@
-using QuoridorWeb.WebApp.Drawable;
+using System.Collections.Generic;
+using System.Text;
 
 namespace QuoridorWeb.WebApp.Drawable
 {
-    public class PlayerDrawable : IDrawable
+    public class PlayerDrawable : TileDrawable, IDrawable
     {
+        private int _playerIndex;
         private string _imgName;
-
-        public PlayerDrawable(int playerIndex)
+        private List<string> _imgNames = new List<string>() 
         {
-            switch(playerIndex)
-            {
-                case 0:
-                    _imgName = "Red_pawn";
-                break;
-                case 1:
-                    _imgName = "Blue_pawn";
-                break;
-                case 2:
-                    _imgName = "Yellow_pawn";
-                break;
-                case 3:
-                    _imgName = "Green_pawn";
-                break;
-            }
+            "Red_pawn",
+            "Blue_pawn",
+            "Yellow_pawn",
+            "Green_pawn"
+        };
+
+        public PlayerDrawable(int i, int j, int playerIndex) : base(i, j)
+        {
+            _playerIndex = playerIndex;
+            _imgName = _imgNames[playerIndex];
         }
 
         public string GetDrawString()
         {
-            return "<td class='cell-solid'><img class='player' src='/img/" + _imgName +".svg'></td>";
+            StringBuilder str = new StringBuilder();
+            str.Append("<td ");
+            str.Append(GetTileAttributesStr());
+            str.Append(">");
+            str.Append(GetPlayerImageTag());
+            str.Append("</td>");
+
+            return str.ToString();
+        }
+
+        private string GetTileAttributesStr()
+        {
+            return "position='" + _pos + "' class='cell-solid'";
+        }
+
+        private string GetPlayerImageTag()
+        {
+            StringBuilder str = new StringBuilder();
+            str.Append("<img ");
+            str.Append("id='player-" + _playerIndex + "' class='player' src='/img/" + _imgName + ".svg' ");
+            str.Append(GetOnClickFunctionStr());
+            str.Append(">");
+
+            return str.ToString();
+        }
+
+        private string GetOnClickFunctionStr()
+        {
+            StringBuilder str = new StringBuilder();
+            str.Append("onclick='");
+            str.Append("selectPlayer($(this).parent().attr(`position`));");
+            str.Append("'");
+
+            return str.ToString();
         }
     }
 }

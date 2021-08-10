@@ -6,7 +6,7 @@ namespace QuoridorWeb.WebApp.Drawable
 
         public string GetDrawString()
         {
-            return "<td position='" + _pos + "' class='cell-solid'></td>";
+            return "<td position='" + _pos + "' class='cell-solid' onclick='movePlayer(this.getAttribute(`position`))'></td>";
         }
     }
 }
