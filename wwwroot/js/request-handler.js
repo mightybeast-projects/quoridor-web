@@ -24,6 +24,7 @@ function sendAjaxRequest(url, model)
         data: JSON.stringify(model),
         success: function (data) {
             $("#content-div").empty().html(data);
+            handleResponceAndReloadUi();
         }
     });
 }

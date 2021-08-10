@@ -6,6 +6,8 @@
 
 table{
     border: solid 8px #7d2b10;
+    border-collapse: separate;
+    border-spacing: 0px 0px;
 }
 
 .cell-void{

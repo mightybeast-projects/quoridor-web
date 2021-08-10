@@ -1,0 +1,26 @@
+@using Microsoft.AspNetCore.Html
+
+<div id="content-div">
+    @(new HtmlString(Model.table))
+</div>
+
+<script>
+    $(document).ready(function() {
+        handleResponceAndReloadUi();
+    });
+
+    function handleResponceAndReloadUi()
+    {
+        select($(getCurrentPlayer()).parent());
+        if(receivedErrorMessage())
+            alert("@Model.errorMessage");
+    }
+
+    function getCurrentPlayer() {
+        return '#player-@Model.game.players.IndexOf(Model.game.currentPlayer)';
+    }
+
+    function receivedErrorMessage() {
+        return '@String.IsNullOrEmpty(Model.errorMessage)' == "False";
+    }
+</script>

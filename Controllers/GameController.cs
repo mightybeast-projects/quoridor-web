@@ -44,7 +44,7 @@ namespace QuoridorWeb.Controllers
             try { _game.MakeCurrentPlayerMove((PlayerMove) moveId); }
             catch (Exception e) { _errorMessage = e.Message; }
              
-            return PartialView("Start", GetModel());
+            return PartialView("Board", GetModel());
         }
 
         [HttpPost]
@@ -57,7 +57,7 @@ namespace QuoridorWeb.Controllers
             try { _game.MakeCurrentPlayerPlaceWall(_wallStartPosition, _wallEndPosition); }
             catch (Exception e) { _errorMessage = e.Message; }
             
-            return PartialView("Start", GetModel());
+            return PartialView("Board", GetModel());
         }
 
         private void DecerializeModelJson(WallModel model)

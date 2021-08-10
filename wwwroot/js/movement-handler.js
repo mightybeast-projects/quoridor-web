@@ -12,8 +12,6 @@ function movePlayer(tilePosition)
 {
     if(playerSelected) {
         positionToMoveStr = tilePosition;
-        //alert(playerSelected + " " + playerPositionStr);
-        //alert(positionToMove + " " + moveVectorX + " " + moveVectorY);
         
         calculateMoveVector();
         sendAppropriateMoveRequest();

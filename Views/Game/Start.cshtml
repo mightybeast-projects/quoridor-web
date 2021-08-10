@@ -1,5 +1,3 @@
-@using Microsoft.AspNetCore.Html
-@using QuoridorWeb.WebApp.Drawable
 @using QuoridorWeb.WebApp;
 @model GameViewModel
 
@@ -10,59 +8,4 @@
 <script src="~/js/movement-handler.js"></script>
 <script src="~/js/ui.js"></script>
 
-<div id="content-div">
-    <div class="text-center">
-        <!--<button onclick="sendMoveRequest(0)">↑</button>
-        <button onclick="sendMoveRequest(1)">↓</button>
-        <button onclick="sendMoveRequest(2)">→</button>
-        <button onclick="sendMoveRequest(3)">←</button>
-
-        <p>Turn to move : 
-            <div class="cell">
-                @(new HtmlString(new PlayerDrawable(0, 0, Model.game.players.IndexOf(Model.game.currentPlayer)).GetDrawString()))
-            </div>
-        </p>-->
-
-        @(new HtmlString(Model.table))
-        <br>
-
-        <table>
-            <tr>
-                <td class="cell-solid"><img id="draggable" class="player" src='/img/Red_pawn.svg'> </td>
-                <td class="cell-void" onclick="blink(this)"> </td>
-                <td class="cell-solid"> </td>
-                <td class="cell-void"> </td>
-                <td class="cell-solid"> </td>
-            </tr>
-            <tr>
-                <td class="cell-void wall"> </td>
-                <td class="cell-void wall"> </td>
-                <td class="cell-void wall"> </td>
-                <td class="cell-void wall"> </td>
-                <td class="cell-void wall"> </td>
-            </tr>
-            <tr id="sortable">
-                <td class="cell-solid"> </td>
-                <td class="cell-void"> </td>
-                <td class="cell-solid"><img class="player" src='/img/Green_pawn.svg'> </td>
-                <td class="cell-void"> </td>
-                <td class="cell-solid"> </td>
-            </tr>
-        </table>
-    </div>
-</div>
-
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-        blink($( '#player-@Model.game.players.IndexOf(Model.game.currentPlayer)' )); 
-    });
-</script>
-
-@if(!String.IsNullOrEmpty(Model.errorMessage))
-{
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
-            alert("@Model.errorMessage");
-        });
-    </script>
-}
+@await Html.PartialAsync("Board")

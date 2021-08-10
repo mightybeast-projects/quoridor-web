@@ -54,6 +54,7 @@ namespace QuoridorWeb.WebApp.Drawable
             StringBuilder str = new StringBuilder();
             str.Append("onclick='");
             str.Append("selectPlayer($(this).parent().attr(`position`));");
+            str.Append("blink(this)");
             str.Append("'");
 
             return str.ToString();

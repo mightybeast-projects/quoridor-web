@@ -1,3 +1,7 @@
 function blink(element) {
-    setInterval(() => $(element).fadeOut(200).fadeIn(200), 10);
+    setInterval(() => $(element).fadeOut(300).fadeIn(300), 300);
+}
+
+function select(element) {
+    $(element).css("border", "2px solid green");
 }
