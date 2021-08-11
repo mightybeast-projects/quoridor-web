@@ -15,7 +15,6 @@ namespace QuoridorWeb.Controllers
         private string _errorMessage;
         private Vector2 _wallStartPosition;
         private Vector2 _wallEndPosition;
-        private int _key;
         
         public GameController(ILogger<GameController> logger)
         {
