@@ -21,7 +21,7 @@ namespace QuoridorWeb.WebApp.Drawable
             StringBuilder str = new StringBuilder();
             str.Append("<td ");
             str.Append("position='" + _pos + "'");
-            str.Append("class='cell-solid'");
+            str.Append("class='cell-solid player-cell'");
             str.Append(">");
             str.Append(GetPlayerImageTag());
             str.Append("</td>");

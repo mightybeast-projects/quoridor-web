@@ -27,6 +27,7 @@ namespace QuoridorWeb.Controllers
 
             _game = new Game();
             _game.AddNewPlayerPair();
+            _game.AddNewPlayerPair();
             _game.Start();
             _webDrawer = new WebDrawer(_game);
             return View(GetModel());
