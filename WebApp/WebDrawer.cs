@@ -63,7 +63,7 @@ namespace QuoridorWeb.WebApp
                 _currentPlayer = player;
                 if (UnitIsPlayer(i, j))
                 {
-                    _drawable = new PlayerDrawable(i, j, k);
+                    _drawable = new PlayerDrawable(i, j, k, _currentPlayer.wallCounter);
                     return;
                 }
             }

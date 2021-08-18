@@ -9,12 +9,4 @@
 <script src="~/js/movement-handler.js"></script>
 <script src="~/js/ui.js"></script>
 
-<table>
-    <tr>
-        <td position="16 8" class="cell-solid player-cell">
-            <img id="player-3" class="player" src="/img/Green_pawn.svg" onclick="if(checkCurrentPlayerIndex(3)){selectPlayer($(this).parent().attr(`position`));blink(this)}">
-        </td>
-    </tr>   
-</table>
-
 @await Html.PartialAsync("Board")

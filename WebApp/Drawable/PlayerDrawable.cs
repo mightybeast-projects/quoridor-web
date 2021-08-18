@@ -7,13 +7,15 @@ namespace QuoridorWeb.WebApp.Drawable
     {
         private int _playerIndex;
         private string _imgName;
+        private int _wallCounter;
         private List<string> _imgNames = new List<string>()
             { "Red_pawn", "Blue_pawn", "Yellow_pawn", "Green_pawn"};
 
-        public PlayerDrawable(int i, int j, int playerIndex) : base(i, j)
+        public PlayerDrawable(int i, int j, int playerIndex, int wallCounter) : base(i, j)
         {
             _playerIndex = playerIndex;
             _imgName = _imgNames[playerIndex];
+            _wallCounter = wallCounter;
         }
 
         public string GetDrawString()
@@ -24,6 +26,7 @@ namespace QuoridorWeb.WebApp.Drawable
             str.Append("class='cell-solid player-cell'");
             str.Append(">");
             str.Append(GetPlayerImageTag());
+            str.Append(GetWallCounterTag());
             str.Append("</td>");
 
             return str.ToString();
@@ -51,6 +54,17 @@ namespace QuoridorWeb.WebApp.Drawable
             str.Append("selectPlayer($(this).parent().attr(`position`));");
             str.Append("blink(this)");
             str.Append("}'");
+
+            return str.ToString();
+        }
+
+        private string GetWallCounterTag() 
+        {
+            StringBuilder str = new StringBuilder();
+            str.Append("<div class='wall-counter-div'>");
+            str.Append("<img class='wall-counter-img' src='/img/walls.png' />");
+            str.Append("<p class='wall-counter-label'>x" + _wallCounter + "</p>");
+            str.Append("</div>");
 
             return str.ToString();
         }

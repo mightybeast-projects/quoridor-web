@@ -14,6 +14,8 @@
         select($(getCurrentPlayer()).parent());
         if(getReceivedErrorMessage())
             alert("@Model.errorMessage");
+        playerSelected = false;
+        wallStartPosition = undefined;
     }
 
     function getCurrentPlayer() {
